@@ -1,0 +1,12 @@
+div.point{
+    color: white;
+}
+div.point.hit{
+    background-color: darkgreen;
+}
+div.point.unhit{
+    background-color: #222;
+}
+div.point:hover{
+    cursor: pointer;
+}

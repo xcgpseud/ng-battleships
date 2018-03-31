@@ -1,0 +1,9 @@
+<div *ngFor="let row of board.points">
+  <div
+    *ngFor="let point of row"
+    [class]="point.myClass"
+    (click)="hitPoint($event, point)"
+  >
+    ID: {{point.id}}
+  </div>
+</div>
