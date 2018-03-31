@@ -1,9 +1,12 @@
 import { Point } from "./point";
 
 export class Board {
+
     width: number;
     height: number;
     points: Array<Array<Point>>;
+
+    private foundPoint: Point;
 
     constructor(width: number, height: number) {
         this.width = width;
@@ -26,9 +29,17 @@ export class Board {
     ngOnInit() { }
 
     getPoint(x: number, y: number): Point {
+
+        this.foundPoint = null;
+
         this.points.forEach(row => {
-            return row.find(p => p.x == x && p.y == y);
-        });
-        return null;
+            row.forEach(p => {
+                if (p.x == x && p.y == y) {
+                    this.foundPoint = p;
+                }
+            })
+        })
+        
+        return this.foundPoint;
     }
 }

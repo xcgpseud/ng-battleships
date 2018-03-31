@@ -1,12 +1,39 @@
-div.point{
-    color: white;
+.board{
+    padding: 0 30%;
 }
-div.point.hit{
+.row {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-flow: row;
+    -webkit-flex-flow: row;
+    justify-content: space-around;
+}
+.point {
+    background: tomato;
+    margin: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center;
+    flex: 1 0 auto;
+}
+.point:hover{
+    cursor: pointer;
+}
+.point:before {
+    content:'';
+    float:left;
+    padding-top:100%;
+}
+.point.hit{
     background-color: darkgreen;
 }
-div.point.unhit{
+.point.unhit{
     background-color: #222;
-}
-div.point:hover{
-    cursor: pointer;
 }

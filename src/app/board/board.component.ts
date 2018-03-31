@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Board } from '../models/board';
 
 @Component({
@@ -10,14 +10,16 @@ export class BoardComponent implements OnInit {
 
   @Input() board: Board;
 
-  constructor() { }
+  constructor(
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    this.board = new Board(4, 4);
+    this.board = new Board(10, 10);
   }
 
   hitPoint(event, point): void {
-    point.hit = true;
+    this.board.getPoint(point.x, point.y).hitPoint();
   }
 
 }
