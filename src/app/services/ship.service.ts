@@ -6,7 +6,6 @@ import { Point } from '../models/point';
 @Injectable()
 export class ShipService {
 
-  board: Board;
   width: number;
   height: number;
 
@@ -15,17 +14,23 @@ export class ShipService {
     this.height = height;
   }
 
-  generatePossibleShips(length: number){
-    this.board = new Board(this.width, this.height);
-    this.fillBoard(length);
-
+  getRandomShip(ships: Array<Ship>, length: number): Ship{
+    let possibleShips = this.generatePossibleShips(ships, length);
+    let randomShip = possibleShips[Math.floor(Math.random() * possibleShips.length)];
+    return randomShip;
   }
 
-  getNonIntersectingShips(board: Board): Array<Ship>{
+  generatePossibleShips(boardShips: Array<Ship>, length: number): Array<Ship>{
+    let ships = this.generateAllShips(length);
+    let nonIntersectingShips = this.getNonIntersectingShips(ships, boardShips);
+    return nonIntersectingShips;
+  }
+
+  getNonIntersectingShips(ships: Array<Ship>, currentShips: Array<Ship>): Array<Ship>{
     let nonIntersectingShips = Array<Ship>();
-    board.ships.forEach(ship => {
+    ships.forEach(ship => {
       let intersects = false;
-      this.board.ships.forEach(currentShip => {
+      currentShips.forEach(currentShip => {
         intersects = this.shipsIntersect(ship, currentShip);
         if(intersects){
           return;
@@ -35,6 +40,7 @@ export class ShipService {
         nonIntersectingShips.push(ship);
       }
     })
+    return nonIntersectingShips;
   }
 
   shipsIntersect(ship: Ship, otherShip: Ship): boolean {
@@ -45,6 +51,7 @@ export class ShipService {
       otherShip.getPoints().forEach(o => {
         if (s.x == o.x && s.y == o.y) {
           intersects = true;
+          return;
         }
       })
     });
@@ -55,15 +62,19 @@ export class ShipService {
 
   // todo: intersects, remove intersecting, return free ship on given board
 
-  private fillBoard(length: number): void {
-    this.fillHorizontal(length);
-    this.fillVertical(length);
+  private generateAllShips(length: number): Array<Ship> {
+    let ships = Array<Ship>();
+    
+    this.fillHorizontal(ships, length);
+    this.fillVertical(ships, length);
+    
+    return ships;
   }
 
-  private fillHorizontal(length: number): void {
-    for (let x = 1; x <= this.board.width - length; x++) {
-      for (let y = 1; y <= this.board.height; y++) {
-        this.board.ships.push(new Ship(
+  private fillHorizontal(ships: Array<Ship>, length: number): void {
+    for (let x = 1; x <= this.width - length; x++) {
+      for (let y = 1; y <= this.height; y++) {
+        ships.push(new Ship(
           new Point(0, x, y),
           new Point(0, x + length, y)
         ))
@@ -71,10 +82,10 @@ export class ShipService {
     }
   }
 
-  private fillVertical(length: number): void {
-    for (let x = 1; x <= this.board.width; x++) {
-      for (let y = 1; y <= this.board.height - length; y++) {
-        this.board.ships.push(new Ship(
+  private fillVertical(ships: Array<Ship>, length: number): void {
+    for (let x = 1; x <= this.width; x++) {
+      for (let y = 1; y <= this.height - length; y++) {
+        ships.push(new Ship(
           new Point(0, x, y),
           new Point(0, x, y + length)
         ));
