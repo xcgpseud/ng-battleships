@@ -1,10 +1,12 @@
 import { Point } from "./point";
+import { Ship } from "./ship";
 
 export class Board {
 
     width: number;
     height: number;
     points: Array<Array<Point>>;
+    ships: Array<Ship>;
 
     private foundPoint: Point;
 
@@ -13,6 +15,7 @@ export class Board {
         this.height = height;
 
         this.points = Array<Array<Point>>();
+        this.ships = Array<Ship>();
 
         let idCount = 0;
 
