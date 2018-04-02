@@ -2,10 +2,10 @@
   <div class="row" *ngFor="let row of board.points">
     <div
       *ngFor="let point of row"
-      [class]="point.myClass"
+      [class]="getPointClass(point)"
       (click)="hitPoint($event, point)"
     >
-      {{point.id}}
+      
     </div>
   </div>
 </div>

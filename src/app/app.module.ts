@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
+import { ShipService } from './services/ship.service';
 
 
 @NgModule({
@@ -16,7 +17,11 @@ import { BoardComponent } from './board/board.component';
     BrowserModule,
     FormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    ShipService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

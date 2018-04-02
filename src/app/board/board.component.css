@@ -37,3 +37,6 @@
 .point.unhit{
     background-color: #222;
 }
+.point.has-ship{
+    background-color: blueviolet;
+}

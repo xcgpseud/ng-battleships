@@ -9,34 +9,41 @@ export class ShipService {
   width: number;
   height: number;
 
-  constructor(width: number, height: number) {
+  constructor() { }
+
+  setParams(width: number, height: number): void {
     this.width = width;
     this.height = height;
   }
 
-  getRandomShip(ships: Array<Ship>, length: number): Ship{
+  getRandomShip(ships: Array<Ship>, length: number): Ship {
+
+    // It's doing 1 more than it should so just cut this down here instead of everywhere else
+    length--;
     let possibleShips = this.generatePossibleShips(ships, length);
     let randomShip = possibleShips[Math.floor(Math.random() * possibleShips.length)];
     return randomShip;
   }
 
-  generatePossibleShips(boardShips: Array<Ship>, length: number): Array<Ship>{
+  generatePossibleShips(boardShips: Array<Ship>, length: number): Array<Ship> {
+
     let ships = this.generateAllShips(length);
     let nonIntersectingShips = this.getNonIntersectingShips(ships, boardShips);
     return nonIntersectingShips;
   }
 
-  getNonIntersectingShips(ships: Array<Ship>, currentShips: Array<Ship>): Array<Ship>{
+  getNonIntersectingShips(ships: Array<Ship>, currentShips: Array<Ship>): Array<Ship> {
+
     let nonIntersectingShips = Array<Ship>();
     ships.forEach(ship => {
       let intersects = false;
       currentShips.forEach(currentShip => {
         intersects = this.shipsIntersect(ship, currentShip);
-        if(intersects){
+        if (intersects) {
           return;
         }
       });
-      if(!intersects){
+      if (!intersects) {
         nonIntersectingShips.push(ship);
       }
     })
@@ -63,15 +70,17 @@ export class ShipService {
   // todo: intersects, remove intersecting, return free ship on given board
 
   private generateAllShips(length: number): Array<Ship> {
+
     let ships = Array<Ship>();
-    
+
     this.fillHorizontal(ships, length);
     this.fillVertical(ships, length);
-    
+
     return ships;
   }
 
   private fillHorizontal(ships: Array<Ship>, length: number): void {
+
     for (let x = 1; x <= this.width - length; x++) {
       for (let y = 1; y <= this.height; y++) {
         ships.push(new Ship(
@@ -83,6 +92,7 @@ export class ShipService {
   }
 
   private fillVertical(ships: Array<Ship>, length: number): void {
+    
     for (let x = 1; x <= this.width; x++) {
       for (let y = 1; y <= this.height - length; y++) {
         ships.push(new Ship(

@@ -11,6 +11,7 @@ export class Board {
     private foundPoint: Point;
 
     constructor(width: number, height: number) {
+        
         this.width = width;
         this.height = height;
 
@@ -42,7 +43,7 @@ export class Board {
                 }
             })
         })
-        
+
         return this.foundPoint;
     }
 }
